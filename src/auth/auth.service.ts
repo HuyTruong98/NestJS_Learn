@@ -9,9 +9,9 @@ export class AuthService {
     private config: ConfigService,
   ) {}
 
-  login(): string {
+  login(data: string): string {
     const jwtToken = this.jwtService.sign(
-      { data: 'Hello' },
+      { data },
       { secret: this.config.get('SECRET_KEY'), expiresIn: '5m' },
     );
     return jwtToken;

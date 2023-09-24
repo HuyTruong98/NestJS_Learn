@@ -13,6 +13,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     });
   }
   async validate(payload: any) {
+    
     // thông tin giải mã của token khi xác minh thành công
     return payload;
   }

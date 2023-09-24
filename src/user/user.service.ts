@@ -6,14 +6,23 @@ import { IUser } from './Dto/user.dto';
 export class UserService {
   private prisma: PrismaClient = new PrismaClient();
 
-  async getUser(hoTen: string): Promise<IUser[]> {
-    return await this.prisma.user.findMany({
+  getUser(hoTen: string): Promise<IUser[]> {
+    return this.prisma.user.findMany({
       where: {
         full_name: {
           contains: hoTen,
         },
       },
     });
+  }
+
+  sum(): number {
+    const one = 2;
+    const two = 3;
+
+    for (let i = 0; i < 5; i++) {}
+
+    return one + two;
   }
 }
 
