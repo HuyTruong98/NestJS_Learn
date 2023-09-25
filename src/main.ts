@@ -1,12 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as express from 'express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { ConfigService } from '@nestjs/config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors(); // cho phép FE truy cập vào API của mình
   app.use(express.static('.')); // định vị lại đường đẫn để load tài nguyên
-  await app.listen(8080);
+  const configService = app.get(ConfigService);
+
+  const config = new DocumentBuilder()
+    .setTitle('Swagger')
+    .addBearerAuth()
+    .build();
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('/swagger-ui.html', app, document);
+
+  await app.listen(configService.get<number>('PORT'));
 }
 bootstrap();
 

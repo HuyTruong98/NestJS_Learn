@@ -6,12 +6,10 @@ import { IUser } from './Dto/user.dto';
 export class UserService {
   private prisma: PrismaClient = new PrismaClient();
 
-  getUser(hoTen: string): Promise<IUser[]> {
-    return this.prisma.user.findMany({
+  getUser(id: number): Promise<IUser> {
+    return this.prisma.user.findUnique({
       where: {
-        full_name: {
-          contains: hoTen,
-        },
+        user_id: Number(id),
       },
     });
   }
